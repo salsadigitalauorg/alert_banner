@@ -8,7 +8,7 @@ third_party_settings:
     available_menus: {  }
     parent: ''
 name: Alert
-type: govcms_alert
+type: alert_banner
 description: 'Use <em>Alert</em> for site-wide emergency alerts and announcements.'
 help: ''
 new_revision: true

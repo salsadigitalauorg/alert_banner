@@ -1,0 +1,6 @@
+alert_banner.alert_banner_config_form:
+  title: 'Alert Banner Settings'
+  route_name: alert_banner.alert_banner_config_form
+  description: 'Manage settings for Alerts'
+  parent: system.admin_config_system
+  weight: 99

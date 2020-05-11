@@ -3,17 +3,17 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_alert_display_date
-    - node.type.govcms_alert
+    - node.type.alert_banner
   module:
     - datetime
-id: node.govcms_alert.field_alert_display_date
+id: node.alert_banner.field_alert_display_date
 field_name: field_alert_display_date
 entity_type: node
-bundle: govcms_alert
+bundle: alert_banner
 label: 'Display Date'
 description: 'Used to display the date in alert content.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }

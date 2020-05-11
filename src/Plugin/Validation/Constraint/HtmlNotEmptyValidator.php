@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\govcms_alert\Plugin\Validation\Constraint;
+namespace Drupal\alert_banner\Plugin\Validation\Constraint;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;

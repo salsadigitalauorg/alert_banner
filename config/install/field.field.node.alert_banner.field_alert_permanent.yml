@@ -3,15 +3,15 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_alert_permanent
-    - node.type.govcms_alert
-id: node.govcms_alert.field_alert_permanent
+    - node.type.alert_banner
+id: node.alert_banner.field_alert_permanent
 field_name: field_alert_permanent
 entity_type: node
-bundle: govcms_alert
+bundle: alert_banner
 label: Permanent
 description: 'Permanent alerts always display even if their alert date does not fall within 7 days. Alerts with future date will not show.'
 required: false
-translatable: false
+translatable: true
 default_value:
   -
     value: 0

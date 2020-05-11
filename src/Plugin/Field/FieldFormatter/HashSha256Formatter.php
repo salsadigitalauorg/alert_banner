@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\govcms_alert\Plugin\Field\FieldFormatter;
+namespace Drupal\alert_banner\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Field\FieldItemListInterface;

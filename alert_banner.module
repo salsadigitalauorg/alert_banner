@@ -1,0 +1,80 @@
+<?php
+
+/**
+ * @file
+ * Alert module.
+ */
+
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function alert_banner_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the alert_banner module.
+    case 'help.page.alert_banner':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Provides ability to display site-wide alert messages and announcements at the top of all pages.') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_entity_bundle_field_info_alter().
+ */
+function alert_banner_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
+  if ($entity_type->id() == 'node' && $bundle == 'alert_banner') {
+    if (isset($fields['field_alert_message'])) {
+      $fields['field_alert_message']->addConstraint('HtmlNotEmpty', []);
+    }
+  }
+}
+
+/**
+ * Implements hook_page_top().
+ */
+function alert_banner_page_top(array &$page_top) {
+  if (!\Drupal::config('alert_banner.settings')->get('enable')) {
+    return;
+  }
+
+  // Do not show alerts on admin pages.
+  if (\Drupal::service('router.admin_context')->isAdminRoute() &&
+    !\Drupal::config('alert_banner.settings')->get('show_on_admin')) {
+    return;
+  }
+
+  $entity_type_manager = \Drupal::entityTypeManager();
+
+  // Retrieve the endpoint of GovCMS Alert Rest.
+  $endpoint = '/alerts?_format=json';
+  try {
+    /** @var \Drupal\views\Entity\View $alert_view */
+    $alert_view = $entity_type_manager->getStorage('view')
+      ->load('alert_banners');
+    if ($alert_view) {
+      $display = $alert_view->getDisplay('rest_export_alerts');
+      if (!empty($display['display_options']['path'])) {
+        $endpoint = '/' . $display['display_options']['path'] . '?_format=json';
+      }
+    }
+  }
+  catch (Exception $exception) {
+    watchdog_exception('alert_banner', $exception);
+  }
+
+  $page_top['alert_banners'] = [
+    '#markup' => '<div class="alert-banners" data-alert-endpoint="' . $endpoint . '"></div>',
+    '#attached' => [
+      'library' => [
+        'alert_banner/alert_banner',
+      ],
+    ],
+    '#cache' => [
+      'tags' => ['config:views.view.alert_banners'],
+    ],
+  ];
+}
