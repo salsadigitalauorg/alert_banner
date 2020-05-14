@@ -254,7 +254,7 @@ display:
     display_options:
       display_extenders:
         metatag_display_extender: {  }
-      path: alerts
+      path: alert-banners
       row:
         type: data_field
         options:
