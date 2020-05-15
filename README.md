@@ -48,4 +48,4 @@ The Alert Banner module provides the site-wide alert messages and announcements.
   2. The module works with dynamic page cache. No cache clear is required when
   an alert is published. If CDN reverse proxy is in use, the REST endpoint of
   the REST view (default path `/alert-banners`) may need to be purged from CDN.
-  3. To configure the view, navigate to GovCMS Alerts view.
+  3. To configure the view, navigate to Alerts view.

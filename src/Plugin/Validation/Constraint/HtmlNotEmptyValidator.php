@@ -8,7 +8,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 /**
  * Validate the NotEmpty constraint for a HTML value.
  *
- * @package Drupal\govcms_alert\Plugin\Validation\Constraint
+ * @package Drupal\alert_banner\Plugin\Validation\Constraint
  */
 class HtmlNotEmptyValidator extends ConstraintValidator {
 
