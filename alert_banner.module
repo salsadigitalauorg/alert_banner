@@ -50,7 +50,7 @@ function alert_banner_page_top(array &$page_top) {
   $entity_type_manager = \Drupal::entityTypeManager();
 
   // Retrieve the endpoint of GovCMS Alert Rest.
-  $endpoint = '/alerts?_format=json';
+  $endpoint = '/alert-banners?_format=json';
   try {
     /** @var \Drupal\views\Entity\View $alert_view */
     $alert_view = $entity_type_manager->getStorage('view')
