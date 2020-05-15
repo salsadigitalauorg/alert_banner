@@ -1,8 +1,5 @@
-.alerts-banners {
+.alert-banners {
   position: relative;
-}
-.path-admin .alert-banners.layout-container {
-  margin: 0;
 }
 .alert-banners article.node--type-alert-banner {
   background: #dc3548;
@@ -171,5 +168,5 @@
 }
 
 .alert-banners article.node--type-alert-banner .alert-banner-message time:after {
-content: ':';
+  content: ':';
 }
