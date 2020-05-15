@@ -22,7 +22,7 @@ dependencies:
     - text
     - user
 id: alert_banners
-label: Alerts
+label: 'Alert Banners'
 module: views
 description: 'Displays a list of published alerts.'
 tag: ''
@@ -237,7 +237,7 @@ display:
         operator: AND
         groups:
           1: AND
-      css_class: block-digitalwa-alerts
+      css_class: block-alert-banners
     cache_metadata:
       max-age: -1
       contexts:
@@ -776,7 +776,7 @@ display:
           type: datetime_default
           settings:
             timezone_override: ''
-            format_type: alert_date
+            format_type: alert_banner_date
           group_column: value
           group_columns: {  }
           group_rows: true

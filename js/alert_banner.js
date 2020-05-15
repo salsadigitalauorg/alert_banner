@@ -61,10 +61,10 @@
       });
 
       // Process the Close button of each alert.
-      $('.alert-banners article.node--type-alert button.alert-close', context).click(function (event) {
+      $('.alert-banners article.node--type-alert-banner button.alert-close', context).click(function (event) {
         var alert_id = $(event.target).attr('data-alert-id');
         $.cookie('hide_alert_id_' + alert_id, true);
-        $('article.node--type-alert[data-alert-id="' + alert_id + '"]').remove();
+        $('article.node--type-alert-banner[data-alert-id="' + alert_id + '"]').remove();
       });
 
       // Loads the alerts for REST endpoint.

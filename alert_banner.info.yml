@@ -17,7 +17,7 @@ dependencies:
   - drupal:views
 config_devel:
   install:
-    - core.date_format.alert_date
+    - core.date_format.alert_banner_date
     - core.entity_form_display.taxonomy_term.alert_banner_type.default
     - core.entity_view_display.taxonomy_term.alert_banner_type.default
     - field.field.taxonomy_term.alert_banner_type.field_alert_type_icon

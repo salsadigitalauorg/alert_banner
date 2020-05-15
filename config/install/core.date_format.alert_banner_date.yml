@@ -1,7 +1,7 @@
 langcode: en
 status: true
 dependencies: {  }
-id: alert_date
-label: 'Alert date'
+id: alert_banner_date
+label: 'Alert Banner Date'
 locked: false
 pattern: 'd M Y'
