@@ -28,7 +28,6 @@ The Alert Banner module provides the site-wide alert messages and announcements.
       recommended not to embed any media into the alert message.
       * Optionally, provide a call-to-action link in the Link field. This field
       will display separately from the message.
-      * Select the date of the alert.
       * Optionally, provide a Date to display along with the alert message.
       * If set as Permanent, the alert will always display and cannot be
       dismissed on frontend.
@@ -36,13 +35,11 @@ The Alert Banner module provides the site-wide alert messages and announcements.
       Visibility field.
   5. Alert display rules:
       * Only display published alerts.
-      * Only display permanent alerts, or alerts within 7 days.
       * Do not display alerts with future date.
   6. Alert ordering rules:
       * Alerts are sorted by Priority (the ordering of Alert Type terms), then
       * Permanent, then
       * Node Sticky, then
-      * Alert date (newest first).
 
 ## For developers
   1. The alerts block is programmatically injected into page_top region with an
@@ -50,5 +47,5 @@ The Alert Banner module provides the site-wide alert messages and announcements.
   view. No block configuration is required.
   2. The module works with dynamic page cache. No cache clear is required when
   an alert is published. If CDN reverse proxy is in use, the REST endpoint of
-  the REST view (default path `/alerts`) may need to be purged from CDN.
+  the REST view (default path `/alert-banners`) may need to be purged from CDN.
   3. To configure the view, navigate to GovCMS Alerts view.

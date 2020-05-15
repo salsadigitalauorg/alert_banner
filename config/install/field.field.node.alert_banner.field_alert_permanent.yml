@@ -9,7 +9,7 @@ field_name: field_alert_permanent
 entity_type: node
 bundle: alert_banner
 label: Permanent
-description: 'Permanent alerts always display even if their alert date does not fall within 7 days. Alerts with future date will not show.'
+description: 'Permanent alerts cannot be dismissed by visitors.'
 required: false
 translatable: true
 default_value:
