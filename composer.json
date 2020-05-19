@@ -1,8 +1,8 @@
 {
-    "name": "govcms_alert/govcms_alert",
-    "description": "GovCMS8 Alert",
-    "keywords": ["GovCMS", "GovCMS8"],
+    "name": "alert_banner/alert_banner",
+    "description": "Alert Banner",
+    "keywords": ["Alert"],
     "type": "drupal-module",
     "license": "GPL-2.0-or-later",
-    "homepage": "https://www.govcms.gov.au"
+    "homepage": "https://www.salsadigital.com.au"
 }

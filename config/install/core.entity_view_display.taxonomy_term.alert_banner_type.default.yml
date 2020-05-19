@@ -2,16 +2,15 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.taxonomy_term.alert_type.field_alert_type_icon
-    - field.field.taxonomy_term.alert_type.field_alert_type_priority_colour
-    - taxonomy.vocabulary.alert_type
+    - field.field.taxonomy_term.alert_banner_type.field_alert_type_icon
+    - field.field.taxonomy_term.alert_banner_type.field_alert_type_priority_colour
+    - taxonomy.vocabulary.alert_banner_type
   module:
     - options
     - text
-third_party_settings: {  }
-id: taxonomy_term.alert_type.default
+id: taxonomy_term.alert_banner_type.default
 targetEntityType: taxonomy_term
-bundle: alert_type
+bundle: alert_banner_type
 mode: default
 content:
   description:

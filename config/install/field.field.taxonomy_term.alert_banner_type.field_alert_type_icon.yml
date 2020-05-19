@@ -3,13 +3,13 @@ status: true
 dependencies:
   config:
     - field.storage.taxonomy_term.field_alert_type_icon
-    - taxonomy.vocabulary.alert_type
+    - taxonomy.vocabulary.alert_banner_type
   module:
     - options
-id: taxonomy_term.alert_type.field_alert_type_icon
+id: taxonomy_term.alert_banner_type.field_alert_type_icon
 field_name: field_alert_type_icon
 entity_type: taxonomy_term
-bundle: alert_type
+bundle: alert_banner_type
 label: 'Alert Icon'
 description: ''
 required: false

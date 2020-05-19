@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Alert installation.
+ */
+
+use Drupal\taxonomy\Entity\Term;
+
+/**
+ * Implements hook_install().
+ */
+function alert_banner_install() {
+  try {
+    drupal_flush_all_caches();
+
+    // Create default alert types.
+    $types = [
+      'Emergency',
+      'Announcement',
+    ];
+    foreach ($types as $weight => $name) {
+      $type = Term::create([
+        'name' => $name,
+        'weight' => $weight,
+        'vid' => 'alert_banner_type',
+      ]);
+      $type->save();
+    }
+
+  }
+  catch (Exception $exception) {
+    watchdog_exception('alert_banner', $exception);
+  }
+}

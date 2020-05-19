@@ -2,11 +2,11 @@ langcode: en
 status: true
 dependencies:
   config:
-    - node.type.govcms_alert
-id: node.govcms_alert.title
+    - node.type.alert_banner
+id: node.alert_banner.title
 field_name: title
 entity_type: node
-bundle: govcms_alert
+bundle: alert_banner
 label: 'Admin Title'
 description: ''
 required: true

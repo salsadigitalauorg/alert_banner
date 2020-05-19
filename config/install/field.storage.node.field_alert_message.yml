@@ -8,8 +8,7 @@ id: node.field_alert_message
 field_name: field_alert_message
 entity_type: node
 type: text_long
-settings:
-  case_sensitive: false
+settings: {  }
 module: text
 locked: false
 cardinality: 1

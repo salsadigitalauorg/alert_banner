@@ -1,0 +1,3 @@
+administer alert_banner:
+  title: 'Administer Alert banner settings'
+  restrict access: true

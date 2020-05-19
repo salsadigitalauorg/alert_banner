@@ -3,17 +3,17 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_alert_link
-    - node.type.govcms_alert
+    - node.type.alert_banner
   module:
     - link
-id: node.govcms_alert.field_alert_link
+id: node.alert_banner.field_alert_link
 field_name: field_alert_link
 entity_type: node
-bundle: govcms_alert
+bundle: alert_banner
 label: Link
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

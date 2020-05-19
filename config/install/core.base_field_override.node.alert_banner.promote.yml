@@ -2,11 +2,11 @@ langcode: en
 status: true
 dependencies:
   config:
-    - node.type.govcms_alert
-id: node.govcms_alert.promote
+    - node.type.alert_banner
+id: node.alert_banner.promote
 field_name: promote
 entity_type: node
-bundle: govcms_alert
+bundle: alert_banner
 label: 'Promoted to front page'
 description: ''
 required: false

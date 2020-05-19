@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\govcms_alert\Form;
+namespace Drupal\alert_banner\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -15,7 +15,7 @@ class ConfigForm extends ConfigFormBase {
    */
   protected function getEditableConfigNames() {
     return [
-      'govcms_alert.settings',
+      'alert_banner.settings',
     ];
   }
 
@@ -23,18 +23,18 @@ class ConfigForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'govcms_alert_config_form';
+    return 'alert_banner_config_form';
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->config('govcms_alert.settings');
+    $config = $this->config('alert_banner.settings');
 
     $form['enable'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Enable GovCMS Alerts'),
+      '#title' => $this->t('Enable Alerts'),
       '#default_value' => $config->get('enable'),
     ];
 
@@ -54,7 +54,7 @@ class ConfigForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
 
-    $this->config('govcms_alert.settings')
+    $this->config('alert_banner.settings')
       ->set('enable', $form_state->getValue('enable'))
       ->set('show_on_admin', $form_state->getValue('show_on_admin'))
       ->save();

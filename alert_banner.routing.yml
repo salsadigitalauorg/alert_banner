@@ -1,0 +1,9 @@
+alert_banner.alert_banner_config_form:
+  path: '/admin/config/system/alert_banner'
+  defaults:
+    _form: '\Drupal\alert_banner\Form\ConfigForm'
+    _title: 'Alert Banner Settings'
+  requirements:
+    _permission: 'administer alert_banner'
+  options:
+    _admin_route: TRUE

@@ -3,17 +3,17 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_alert_message
-    - node.type.govcms_alert
+    - node.type.alert_banner
   module:
     - text
-id: node.govcms_alert.field_alert_message
+id: node.alert_banner.field_alert_message
 field_name: field_alert_message
 entity_type: node
-bundle: govcms_alert
+bundle: alert_banner
 label: 'Alert Message'
 description: 'Used for the content of the alert.'
-required: true
-translatable: false
+required: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }

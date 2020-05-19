@@ -9,10 +9,10 @@ dependencies:
     - field.storage.node.field_alert_permanent
     - field.storage.taxonomy_term.field_alert_type_icon
     - field.storage.taxonomy_term.field_alert_type_priority_colour
-    - node.type.govcms_alert
+    - node.type.alert_banner
   module:
+    - alert_banner
     - datetime
-    - govcms_alert
     - link
     - node
     - options
@@ -21,10 +21,8 @@ dependencies:
     - taxonomy
     - text
     - user
-_core:
-  default_config_hash: DIlesCAGPh27zNXU0V5aIneag5WMJeRnPS20IOUAj4g
-id: govcms_alerts
-label: 'GovCMS Alerts'
+id: alert_banners
+label: 'Alert Banners'
 module: views
 description: 'Displays a list of published alerts.'
 tag: ''
@@ -144,7 +142,7 @@ display:
           admin_label: ''
           operator: in
           value:
-            govcms_alert: govcms_alert
+            alert_banner: alert_banner
           group: 1
           exposed: false
           expose:
@@ -177,134 +175,6 @@ display:
           entity_type: node
           entity_field: type
           plugin_id: bundle
-        field_alert_date_value:
-          id: field_alert_date_value
-          table: node__field_alert_date
-          field: field_alert_date_value
-          relationship: none
-          group_type: group
-          admin_label: ''
-          operator: '>='
-          value:
-            min: '-7 day'
-            max: ''
-            value: '-7 days'
-            type: offset
-          group: 2
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            placeholder: ''
-            min_placeholder: ''
-            max_placeholder: ''
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          plugin_id: datetime
-        field_alert_permanent_value:
-          id: field_alert_permanent_value
-          table: node__field_alert_permanent
-          field: field_alert_permanent_value
-          relationship: none
-          group_type: group
-          admin_label: ''
-          operator: '='
-          value: '1'
-          group: 2
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          plugin_id: boolean
-        field_alert_date_value_1:
-          id: field_alert_date_value_1
-          table: node__field_alert_date
-          field: field_alert_date_value
-          relationship: none
-          group_type: group
-          admin_label: ''
-          operator: '<='
-          value:
-            min: ''
-            max: ''
-            value: today
-            type: offset
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            placeholder: ''
-            min_placeholder: ''
-            max_placeholder: ''
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          plugin_id: datetime
       sorts:
         weight:
           id: weight
@@ -346,19 +216,6 @@ display:
           entity_type: node
           entity_field: sticky
           plugin_id: standard
-        field_alert_date_value:
-          id: field_alert_date_value
-          table: node__field_alert_date
-          field: field_alert_date_value
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: DESC
-          exposed: false
-          expose:
-            label: ''
-          granularity: day
-          plugin_id: datetime
       title: '<none>'
       header: {  }
       footer: {  }
@@ -380,8 +237,7 @@ display:
         operator: AND
         groups:
           1: AND
-          2: OR
-      css_class: block-digitalwa-alerts
+      css_class: block-alert-banners
     cache_metadata:
       max-age: -1
       contexts:
@@ -398,7 +254,7 @@ display:
     display_options:
       display_extenders:
         metatag_display_extender: {  }
-      path: govcms-alerts
+      path: alert-banners
       row:
         type: data_field
         options:
@@ -920,7 +776,7 @@ display:
           type: datetime_default
           settings:
             timezone_override: ''
-            format_type: govcms_alert_date
+            format_type: alert_banner_date
           group_column: value
           group_columns: {  }
           group_rows: true

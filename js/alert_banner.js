@@ -42,10 +42,10 @@
     return true;
   }
 
-  Drupal.behaviors.govcmsAlertsRestBlock = {
+  Drupal.behaviors.AlertBannersRestBlock = {
     attach: function (context, settings) {
       // Set alert text color.
-      $('.govcms-alerts article.node--type-alert', context).each(function (index, element) {
+      $('.alert-banners article.node--type-alert-banner', context).each(function (index, element) {
         var color = element.style.backgroundColor;
         if (color) {
           var threshold = Math.sqrt(1.05 * 0.05) - 0.05;
@@ -61,17 +61,17 @@
       });
 
       // Process the Close button of each alert.
-      $('.govcms-alerts article.node--type-alert button.govcms-alert-close', context).click(function (event) {
+      $('.alert-banners article.node--type-alert-banner button.alert-close', context).click(function (event) {
         var alert_id = $(event.target).attr('data-alert-id');
         $.cookie('hide_alert_id_' + alert_id, true);
-        $('article.node--type-alert[data-alert-id="' + alert_id + '"]').remove();
+        $('article.node--type-alert-banner[data-alert-id="' + alert_id + '"]').remove();
       });
 
       // Loads the alerts for REST endpoint.
-      $('.govcms-alerts:not(.alerts-processed)', context).once('govcms_alerts_load').each(function (index, element) {
+      $('.alert-banners:not(.alerts-processed)', context).once('alert_banners_load').each(function (index, element) {
         var endpoint = $(element).attr('data-alert-endpoint');
         if ((typeof endpoint == 'undefined') || !endpoint || endpoint.length === 0) {
-          endpoint = '/govcms-alerts?_format=json';
+          endpoint = '/alert-banners?_format=json';
         }
         $.getJSON(endpoint, function (response) {
           if (response.length) {
@@ -92,7 +92,7 @@
               }
 
               // Build the alert.
-              var $alert = $('<article role="article" data-alert-id="' + alert_item.alert_id + '" class="node node--type-alert"><div class="container node__content"></div></article>');
+              var $alert = $('<article role="article" data-alert-id="' + alert_item.alert_id + '" class="node node--type-alert-banner"><div class="layout-container node__content"></div></article>');
               // Set alert type and priority.
               if ((typeof alert_item.alert_type !== 'undefined') && (alert_item.alert_type !== "")) {
                 $alert.attr('data-alert-type', alert_item.alert_type);
@@ -124,23 +124,23 @@
                 if ((typeof alert_item.display_date !== 'undefined') && (alert_item.display_date !== "")) {
                   alert_message = alert_item.display_date + alert_message;
                 }
-                $('<div class="field clearfix govcms-alert-message">' + alert_message + '</div>')
+                $('<div class="field clearfix alert-banner-message">' + alert_message + '</div>')
                   .appendTo($alert.find('.node__content'));
               }
 
               // Attaches the link.
               if (typeof alert_item.link !== 'undefined' && alert_item.link !== false && alert_item.link !== "") {
-                $('<div class="field clearfix govcms-alert-link au-cta-link">' + alert_item.link + '</div>')
+                $('<div class="field clearfix alert-banner-link">' + alert_item.link + '</div>')
                   .appendTo($alert.find('.node__content'));
               }
               else {
-                $alert.addClass('alert-cta-link--none');
+                $alert.addClass('alert-banner-link--none');
               }
 
               // Generates the Close button.
               if ((typeof alert_item.permanent !== 'undefined') && (alert_item.permanent !== '1')) {
                 var label_dismiss = Drupal.t('Dismiss alert');
-                $('<button class="govcms-alert-close" data-alert-id="' + alert_item.alert_id + '" aria-label="' + label_dismiss + '"><span>' + label_dismiss + '</span></button>')
+                $('<button class="alert-banner-close" data-alert-id="' + alert_item.alert_id + '" aria-label="' + label_dismiss + '"><span>' + label_dismiss + '</span></button>')
                   .appendTo($alert.find('.node__content'));
               }
               else {
@@ -149,7 +149,7 @@
 
               $alert.appendTo($placeholder);
             }
-            Drupal.behaviors.govcmsAlertsRestBlock.attach(context, settings);
+            Drupal.behaviors.AlertBannersRestBlock.attach(context, settings);
           }
         });
       });
