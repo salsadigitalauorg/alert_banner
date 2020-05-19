@@ -10,3 +10,8 @@ alert_banner:
     - core/jquery
     - core/jquery.cookie
     - core/jquery.once
+alert_banner_au_dta:
+  version: 1.x
+    css:
+      theme:
+        css/alert_banner_au_dta.css: {}

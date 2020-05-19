@@ -37,13 +37,14 @@ function alert_banner_entity_bundle_field_info_alter(&$fields, EntityTypeInterfa
  * Implements hook_page_top().
  */
 function alert_banner_page_top(array &$page_top) {
-  if (!\Drupal::config('alert_banner.settings')->get('enable')) {
+  $settings = \Drupal::config('alert_banner.settings');
+  if (!$settings->get('enable')) {
     return;
   }
 
   // Do not show alerts on admin pages.
   if (\Drupal::service('router.admin_context')->isAdminRoute() &&
-    !\Drupal::config('alert_banner.settings')->get('show_on_admin')) {
+    !$settings->get('show_on_admin')) {
     return;
   }
 
@@ -66,12 +67,18 @@ function alert_banner_page_top(array &$page_top) {
     watchdog_exception('alert_banner', $exception);
   }
 
+  $library = ['alert_banner/alert_banner'];
+  $css_classes = 'alert-banners';
+
+  if (!$settings->get('au_dta_design_system')) {
+    $css_classes .= ' au-grid au-body';
+    $library[] = 'alert_banner/alert_banner_au_dta';
+  }
+
   $page_top['alert_banners'] = [
-    '#markup' => '<div class="alert-banners" data-alert-endpoint="' . $endpoint . '"></div>',
+    '#markup' => '<div class="' . $css_classes . '" data-alert-endpoint="' . $endpoint . '"></div>',
     '#attached' => [
-      'library' => [
-        'alert_banner/alert_banner',
-      ],
+      'library' => $library,
     ],
     '#cache' => [
       'tags' => ['config:views.view.alert_banners'],

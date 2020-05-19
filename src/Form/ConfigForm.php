@@ -34,15 +34,22 @@ class ConfigForm extends ConfigFormBase {
 
     $form['enable'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Enable Alerts'),
+      '#title' => $this->t('Enable Alert Banners'),
       '#default_value' => $config->get('enable'),
     ];
 
     $form['show_on_admin'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Show on Administration Pages'),
-      '#description' => $this->t('This will allow the alerts to show on backend admin pages as well as the frontend.'),
+      '#description' => $this->t('This will allow the alert banners to show on backend admin pages as well as the frontend.'),
       '#default_value' => $config->get('show_on_admin'),
+    ];
+
+    $form['au_dta_design_system'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Add support for Australian Government Design System'),
+      '#description' => $this->t('This will render the alert banners with styling compatible to <a href="https://designsystem.gov.au" target="_blank">Australian Government Design System</a>.'),
+      '#default_value' => $config->get('au_dta_design_system'),
     ];
 
     return parent::buildForm($form, $form_state);
@@ -57,6 +64,7 @@ class ConfigForm extends ConfigFormBase {
     $this->config('alert_banner.settings')
       ->set('enable', $form_state->getValue('enable'))
       ->set('show_on_admin', $form_state->getValue('show_on_admin'))
+      ->set('au_dta_design_system', $form_state->getValue('au_dta_design_system'))
       ->save();
   }
 
