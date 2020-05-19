@@ -7,9 +7,9 @@ third_party_settings:
   menu_ui:
     available_menus: {  }
     parent: ''
-name: Alert
+name: Alert Banner
 type: alert_banner
-description: 'Use <em>Alert</em> for site-wide emergency alerts and announcements.'
+description: 'Use <em>Alert Banner</em> for site-wide emergency alerts and announcements.'
 help: ''
 new_revision: true
 preview_mode: 1

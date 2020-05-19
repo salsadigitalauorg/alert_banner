@@ -9,7 +9,7 @@ id: node.alert_banner.field_alert_type
 field_name: field_alert_type
 entity_type: node
 bundle: alert_banner
-label: 'Alert Type'
+label: 'Alert Banner Type'
 description: ''
 required: false
 translatable: true

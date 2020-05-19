@@ -1,7 +1,7 @@
 langcode: en
 status: true
 dependencies: {  }
-name: 'Alert banner type'
+name: 'Alert Banner type'
 vid: alert_banner_type
-description: 'Provides the type and priority of site-wide Alerts.'
+description: 'Provides the type and priority of site-wide Alert Banners.'
 weight: 0

@@ -61,7 +61,7 @@
       });
 
       // Process the Close button of each alert.
-      $('.alert-banners article.node--type-alert-banner button.alert-close', context).click(function (event) {
+      $('.alert-banners article.node--type-alert-banner button.alert-banner-close', context).click(function (event) {
         var alert_id = $(event.target).attr('data-alert-id');
         $.cookie('hide_alert_id_' + alert_id, true);
         $('article.node--type-alert-banner[data-alert-id="' + alert_id + '"]').remove();
@@ -92,7 +92,7 @@
               }
 
               // Build the alert.
-              var $alert = $('<article role="article" data-alert-id="' + alert_item.alert_id + '" class="node node--type-alert-banner"><div class="layout-container node__content"></div></article>');
+              var $alert = $('<article role="article" data-alert-id="' + alert_item.alert_id + '" class="node node--type-alert-banner"><div class="layout-container container node__content"></div></article>');
               // Set alert type and priority.
               if ((typeof alert_item.alert_type !== 'undefined') && (alert_item.alert_type !== "")) {
                 $alert.attr('data-alert-type', alert_item.alert_type);
@@ -109,7 +109,7 @@
               // Set the icon.
               if ((typeof alert_item.icon !== 'undefined') && alert_item.icon !== false && alert_item.icon !== "") {
                 $alert.addClass('alert-icon--' + alert_item.icon);
-                if (!$placeholder.hasClass('alerts-with-icons')) {
+                if (alert_item.icon !== 'none' && !$placeholder.hasClass('alerts-with-icons')) {
                   $placeholder.addClass('alerts-with-icons');
                 }
               }
