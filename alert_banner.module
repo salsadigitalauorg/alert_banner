@@ -70,7 +70,7 @@ function alert_banner_page_top(array &$page_top) {
   $library = ['alert_banner/alert_banner'];
   $css_classes = 'alert-banners';
 
-  if (!$settings->get('au_dta_design_system')) {
+  if ($settings->get('au_dta_design_system')) {
     $css_classes .= ' au-grid au-body';
     $library[] = 'alert_banner/alert_banner_au_dta';
   }
