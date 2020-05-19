@@ -1,0 +1,9 @@
+.alert-banners article.node--type-alert-banner .alert-banner-link a {
+  font-weight: bold;
+  margin-top: .5em;
+  display: inline-block;
+}
+
+.alert-banners article.node--type-alert-banner button.alert-banner-close:after {
+  line-height: 1;
+}
