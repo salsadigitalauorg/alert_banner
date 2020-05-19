@@ -1,5 +1,5 @@
 {
-    "name": "alert_banner/alert_banner",
+    "name": "drupal/alert_banner",
     "description": "Alert Banner",
     "keywords": ["Alert"],
     "type": "drupal-module",
