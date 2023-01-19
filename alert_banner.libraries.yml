@@ -7,9 +7,8 @@ alert_banner:
     js/alert_banner.js: {}
   dependencies:
     - core/drupal
-    - core/jquery
-    - core/jquery.cookie
-    - core/jquery.once
+    - core/once
+    - core/js-cookie
 
 alert_banner_au_dta:
   version: 1.x
