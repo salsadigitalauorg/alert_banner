@@ -1,6 +1,11 @@
 # Alert Banner
 The Alert Banner module provides site-wide alert messages and announcements that can be placed anywhere on the site.
 
+## Requirements
+- PHP 8.3 or higher
+- Drupal Core: ^10
+- Core Modules: block, text, options
+
 ## Installation
 1. Install the `alert_banner` module using Composer:   ```bash
    composer require drupal/alert_banner   ```
