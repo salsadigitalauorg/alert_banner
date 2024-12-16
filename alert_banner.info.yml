@@ -1,46 +1,10 @@
 name: Alert Banner
-description: 'Provides site-wide alerts and announcements.'
 type: module
-core: 8.x
-core_version_requirement: ^8 || ^9
+description: 'Provides an alert banner block that can be placed anywhere on the site.'
+package: Custom
+core_version_requirement: ^10
 dependencies:
-  - drupal:datetime
-  - drupal:field
-  - drupal:link
-  - drupal:menu_ui
-  - drupal:node
-  - drupal:path
-  - drupal:rest
-  - drupal:serialization
-  - drupal:taxonomy
+  - drupal:block
   - drupal:text
-  - drupal:views
-config_devel:
-  install:
-    - core.date_format.alert_banner_date
-    - core.entity_form_display.taxonomy_term.alert_banner_type.default
-    - core.entity_view_display.taxonomy_term.alert_banner_type.default
-    - field.field.taxonomy_term.alert_banner_type.field_alert_type_icon
-    - field.field.taxonomy_term.alert_banner_type.field_alert_type_priority_colour
-    - field.storage.node.field_alert_display_date
-    - field.storage.node.field_alert_link
-    - field.storage.node.field_alert_message
-    - field.storage.node.field_alert_page_visibility
-    - field.storage.node.field_alert_permanent
-    - field.storage.node.field_alert_type
-    - field.storage.taxonomy_term.field_alert_type_icon
-    - field.storage.taxonomy_term.field_alert_type_priority_colour
-    - alert_banner.settings
-    - node.type.alert_banner
-    - field.field.node.alert_banner.field_alert_permanent
-    - field.field.node.alert_banner.field_alert_page_visibility
-    - field.field.node.alert_banner.field_alert_link
-    - field.field.node.alert_banner.field_alert_display_date
-    - core.base_field_override.node.alert_banner.title
-    - core.base_field_override.node.alert_banner.promote
-    - taxonomy.vocabulary.alert_banner_type
-    - field.field.node.alert_banner.field_alert_type
-    - field.field.node.alert_banner.field_alert_message
-    - core.entity_form_display.node.alert_banner.default
-    - core.entity_view_display.node.alert_banner.default
-    - views.view.alert_banners
+  - drupal:options
+configure: alert_banner.settings

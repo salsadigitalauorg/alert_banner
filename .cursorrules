@@ -1,0 +1,84 @@
+# Alert Banner Module for Drupal 10
+
+## Project Description
+A Drupal 10 module that provides configurable alert banners that can be placed anywhere on the site. The module supports:
+- Multiple alert types with customizable styling
+- Permanent and dismissible alerts
+- Page-specific visibility rules
+- Australian Government Design System compatibility
+- REST API integration
+- Configurable display settings
+
+## Directory Structure
+```
+alert_banner/
+├── alert_banner.info.yml # Module information
+├── alert_banner.install # Installation and update hooks
+├── alert_banner.libraries.yml # Frontend asset definitions
+├── alert_banner.links.menu.yml # Menu link definitions
+├── alert_banner.module # Core module functionality
+├── alert_banner.permissions.yml # Permission definitions
+├── alert_banner.routing.yml # Route definitions
+├── composer.json # Composer dependencies
+├── config/
+│ └── install/ # Configuration installation files
+│ ├── alert_banner.settings.yml
+│ ├── core.date_format.alert_banner_date.yml
+│ ├── core.entity_form_display.node.alert_banner.default.yml
+│ ├── core.entity_view_display.node.alert_banner.default.yml
+│ ├── field.field..yml # Field configuration files
+│ ├── field.storage..yml # Field storage configuration files
+│ ├── node.type.alert_banner.yml
+│ ├── taxonomy.vocabulary.alert_banner_type.yml
+│ └── views.view.alert_banners.yml
+├── css/
+│ ├── alert_banner.css # Main styles
+│ └── alert_banner_au_dta.css # Australian Gov Design System styles
+├── js/
+│ └── alert_banner.js # Frontend functionality
+└── src/
+├── Form/
+│ └── ConfigForm.php # Module configuration form
+└── Plugin/
+├── Field/
+│ └── FieldFormatter/
+│ └── HashSha256Formatter.php
+└── Validation/
+└── Constraint/
+├── HtmlNotEmpty.php
+└── HtmlNotEmptyValidator.php
+```
+
+## Key Files and Their Purpose
+
+### Core Files
+- `alert_banner.info.yml`: Module metadata and dependencies
+- `alert_banner.module`: Core hooks and functionality
+- `alert_banner.libraries.yml`: Frontend asset management
+- `alert_banner.routing.yml`: Route definitions for admin pages
+
+### Configuration
+- `config/install/*.yml`: Default configuration files
+- `src/Form/ConfigForm.php`: Admin configuration form
+
+### Frontend Assets
+- `css/`: Stylesheet files
+- `js/`: JavaScript functionality
+- `libraries.yml`: Asset dependency management
+
+### Field & Entity Configuration
+- `config/install/field.*.yml`: Field configuration
+- `config/install/core.entity_*.yml`: Entity display settings
+
+### Validation
+- `src/Plugin/Validation/`: Custom validation constraints
+
+## Coding Standards
+- PHP: PSR-12, Drupal Coding Standards
+- JavaScript: ESLint, Drupal JavaScript Standards
+- CSS: Drupal CSS Standards
+- YAML: Drupal Configuration Standards
+
+## Dependencies
+- Drupal Core: ^10
+- Core Modules: block, text, options

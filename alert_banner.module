@@ -11,7 +11,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
 /**
  * Implements hook_help().
  */
-function alert_banner_help($route_name, RouteMatchInterface $route_match) {
+function alert_banner_help($route_name, RouteMatchInterface $route_match): ?string {
   switch ($route_name) {
     // Main module help for the alert_banner module.
     case 'help.page.alert_banner':
@@ -25,7 +25,7 @@ function alert_banner_help($route_name, RouteMatchInterface $route_match) {
 /**
  * Implements hook_entity_bundle_field_info_alter().
  */
-function alert_banner_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
+function alert_banner_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle): void {
   if ($entity_type->id() == 'node' && $bundle == 'alert_banner') {
     if (isset($fields['field_alert_message'])) {
       $fields['field_alert_message']->addConstraint('HtmlNotEmpty', []);
@@ -36,8 +36,8 @@ function alert_banner_entity_bundle_field_info_alter(&$fields, EntityTypeInterfa
 /**
  * Implements hook_page_top().
  */
-function alert_banner_page_top(array &$page_top) {
-  $settings = \Drupal::config('alert_banner.settings');
+function alert_banner_page_top(array &$page_top): void {
+  $settings = \Drupal::configFactory()->get('alert_banner.settings');
   if (!$settings->get('enable')) {
     return;
   }

@@ -1,5 +1,5 @@
 alert_banner:
-  version: 1.x
+  version: VERSION
   css:
     theme:
       css/alert_banner.css: {}
@@ -7,9 +7,8 @@ alert_banner:
     js/alert_banner.js: {}
   dependencies:
     - core/drupal
-    - core/jquery
-    - core/jquery.cookie
-    - core/jquery.once
+    - core/once
+    - core/drupalSettings
 
 alert_banner_au_dta:
   version: 1.x

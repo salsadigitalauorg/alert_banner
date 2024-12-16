@@ -3,7 +3,7 @@
  * Provides RESTful API functionality for Alerts block.
  */
 
-(function ($, Drupal) {
+(function ($, Drupal, once) {
 
   'use strict';
 
@@ -68,7 +68,7 @@
       });
 
       // Loads the alerts for REST endpoint.
-      $('.alert-banners:not(.alerts-processed)', context).once('alert_banners_load').each(function (index, element) {
+      once('alert_banners_load', '.alert-banners:not(.alerts-processed)', context).forEach(function (element) {
         var endpoint = $(element).attr('data-alert-endpoint');
         if ((typeof endpoint == 'undefined') || !endpoint || endpoint.length === 0) {
           endpoint = '/alert-banners?_format=json';
@@ -156,4 +156,4 @@
     }
   };
 
-})(jQuery, Drupal);
+})(jQuery, Drupal, once);
