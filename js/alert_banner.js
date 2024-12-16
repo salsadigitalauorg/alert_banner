@@ -3,7 +3,7 @@
  * Provides RESTful API functionality for Alerts block.
  */
 
-(function ($, Drupal) {
+(function ($, Drupal, once, cookies) {
 
   'use strict';
 
@@ -63,12 +63,12 @@
       // Process the Close button of each alert.
       $('.alert-banners article.node--type-alert-banner button.alert-banner-close', context).click(function (event) {
         var alert_id = $(event.target).attr('data-alert-id');
-        $.cookie('hide_alert_id_' + alert_id, true);
+        cookies.set('hide_alert_id_' + alert_id, true);
         $('article.node--type-alert-banner[data-alert-id="' + alert_id + '"]').remove();
       });
 
       // Loads the alerts for REST endpoint.
-      $('.alert-banners:not(.alerts-processed)', context).once('alert_banners_load').each(function (index, element) {
+      $(once('.alert-banners:not(.alerts-processed)', context)).each(function (index, element) {
         var endpoint = $(element).attr('data-alert-endpoint');
         if ((typeof endpoint == 'undefined') || !endpoint || endpoint.length === 0) {
           endpoint = '/alert-banners?_format=json';
@@ -81,7 +81,7 @@
               var alert_item = response[i];
               var alert_id = response[i].alert_id;
               // Skips the alert hidden by user session.
-              if (typeof $.cookie('hide_alert_id_' + alert_id) !== 'undefined') {
+              if (typeof cookies.get('hide_alert_id_' + alert_id) !== 'undefined') {
                 continue;
               }
 
