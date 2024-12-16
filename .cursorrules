@@ -82,3 +82,65 @@ alert_banner/
 ## Dependencies
 - Drupal Core: ^10
 - Core Modules: block, text, options
+
+# Alert Banner Module for Drupal 10
+
+## Commit Message Format
+Each commit message consists of a header, a body and a footer. The header has a special format that includes a type, a scope and a subject:
+
+```.cursorrules
+<type>(<scope>): <subject>
+<BLANK LINE>
+<body>
+<BLANK LINE>
+<footer>
+```
+
+### Types
+- feat: A new feature
+- fix: A bug fix
+- docs: Documentation only changes
+- style: Changes that do not affect the meaning of the code (white-space, formatting, etc)
+- refactor: A code change that neither fixes a bug nor adds a feature
+- perf: A code change that improves performance
+- test: Adding missing tests or correcting existing tests
+- chore: Changes to the build process or auxiliary tools and libraries
+- ci: Changes to CI configuration files and scripts
+- revert: Reverts a previous commit
+
+### Scopes
+- core: Core module functionality
+- admin: Administration interface
+- api: REST API functionality
+- ui: User interface components
+- style: CSS/styling changes
+- js: JavaScript functionality
+- config: Configuration changes
+- deps: Dependency updates
+- test: Test-related changes
+- ci: CI/CD related changes
+
+### Examples
+```
+feat(api): add REST endpoint for alert filtering
+
+Add new query parameters to the REST API endpoint to support filtering alerts by:
+- type
+- date range
+- visibility
+
+Closes #123
+```
+
+```
+fix(ui): resolve contrast issues in dark mode
+
+- Update color calculation logic
+- Add fallback colors for edge cases
+- Improve accessibility compliance
+
+Fixes #456
+```
+
+## Project Description
+...(rest of the file remains unchanged)...
