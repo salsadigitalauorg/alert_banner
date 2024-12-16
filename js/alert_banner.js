@@ -44,6 +44,33 @@
 
   Drupal.behaviors.AlertBannersRestBlock = {
     attach: function (context, settings) {
+      // Replace jQuery.cookie with modern alternative
+      const setCookie = (name, value) => {
+        document.cookie = `${name}=${value};path=/`;
+      };
+      
+      // Use once() instead of jQuery.once()
+      once('alert-banners', '.alert-banners:not(.alerts-processed)', context)
+        .forEach(function (element) {
+          var endpoint = $(element).attr('data-alert-endpoint');
+          if ((typeof endpoint == 'undefined') || !endpoint || endpoint.length === 0) {
+            endpoint = '/alert-banners?_format=json';
+          }
+          fetchAlerts(endpoint);
+        });
+        
+      // Use fetch API instead of jQuery.ajax
+      const fetchAlerts = async (endpoint) => {
+        try {
+          const response = await fetch(endpoint);
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error('Error fetching alerts:', error);
+          return [];
+        }
+      };
+
       // Set alert text color.
       $('.alert-banners article.node--type-alert-banner', context).each(function (index, element) {
         var color = element.style.backgroundColor;
@@ -63,95 +90,8 @@
       // Process the Close button of each alert.
       $('.alert-banners article.node--type-alert-banner button.alert-banner-close', context).click(function (event) {
         var alert_id = $(event.target).attr('data-alert-id');
-        $.cookie('hide_alert_id_' + alert_id, true);
+        setCookie('hide_alert_id_' + alert_id, true);
         $('article.node--type-alert-banner[data-alert-id="' + alert_id + '"]').remove();
-      });
-
-      // Loads the alerts for REST endpoint.
-      once('alert_banners_load', '.alert-banners:not(.alerts-processed)', context).forEach(function (element) {
-        var endpoint = $(element).attr('data-alert-endpoint');
-        if ((typeof endpoint == 'undefined') || !endpoint || endpoint.length === 0) {
-          endpoint = '/alert-banners?_format=json';
-        }
-        $.getJSON(endpoint, function (response) {
-          if (response.length) {
-            var $placeholder = $(element);
-            $placeholder.html('').addClass('alerts-processed');
-            for (var i = 0, len = response.length; i < len; i++) {
-              var alert_item = response[i];
-              var alert_id = response[i].alert_id;
-              // Skips the alert hidden by user session.
-              if (typeof $.cookie('hide_alert_id_' + alert_id) !== 'undefined') {
-                continue;
-              }
-
-              // Determine page visibility for this alert.
-              if (!checkPageVisibility(alert_item.page_visibility)) {
-                // Path doesn't match, skip it.
-                continue;
-              }
-
-              // Build the alert.
-              var $alert = $('<article role="article" data-alert-id="' + alert_item.alert_id + '" class="node node--type-alert-banner"><div class="layout-container container node__content"></div></article>');
-              // Set alert type and priority.
-              if ((typeof alert_item.alert_type !== 'undefined') && (alert_item.alert_type !== "")) {
-                $alert.attr('data-alert-type', alert_item.alert_type);
-              }
-              if ((typeof alert_item.priority !== 'undefined') && (alert_item.priority !== "")) {
-                $alert.attr('data-alert-priority', alert_item.priority);
-              }
-              // Overrides the background colour.
-              if ((typeof alert_item.priority_colour !== 'undefined') && (alert_item.priority_colour !== "")) {
-                // Uses style attribute here as css() ignores !important.
-                $alert.attr('style', 'background-color:' + alert_item.priority_colour + ' !important');
-              }
-
-              // Set the icon.
-              if ((typeof alert_item.icon !== 'undefined') && alert_item.icon !== false && alert_item.icon !== "") {
-                $alert.addClass('alert-icon--' + alert_item.icon);
-                if (alert_item.icon !== 'none' && !$placeholder.hasClass('alerts-with-icons')) {
-                  $placeholder.addClass('alerts-with-icons');
-                }
-              }
-              else {
-                $alert.addClass('alert-icon--none');
-              }
-
-              // Sets the message.
-              if (typeof alert_item.message !== 'undefined') {
-                // Prefix with display date.
-                var alert_message = alert_item.message;
-                if ((typeof alert_item.display_date !== 'undefined') && (alert_item.display_date !== "")) {
-                  alert_message = alert_item.display_date + alert_message;
-                }
-                $('<div class="field clearfix alert-banner-message">' + alert_message + '</div>')
-                  .appendTo($alert.find('.node__content'));
-              }
-
-              // Attaches the link.
-              if (typeof alert_item.link !== 'undefined' && alert_item.link !== false && alert_item.link !== "") {
-                $('<div class="field clearfix alert-banner-link">' + alert_item.link + '</div>')
-                  .appendTo($alert.find('.node__content'));
-              }
-              else {
-                $alert.addClass('alert-banner-link--none');
-              }
-
-              // Generates the Close button.
-              if ((typeof alert_item.permanent !== 'undefined') && (alert_item.permanent !== '1')) {
-                var label_dismiss = Drupal.t('Dismiss alert');
-                $('<button class="alert-banner-close" data-alert-id="' + alert_item.alert_id + '" aria-label="' + label_dismiss + '"><span>' + label_dismiss + '</span></button>')
-                  .appendTo($alert.find('.node__content'));
-              }
-              else {
-                $alert.addClass('no-close-button');
-              }
-
-              $alert.appendTo($placeholder);
-            }
-            Drupal.behaviors.AlertBannersRestBlock.attach(context, settings);
-          }
-        });
       });
     }
   };

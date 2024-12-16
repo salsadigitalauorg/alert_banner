@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\alert_banner\Form;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -7,9 +9,9 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Class ConfigForm.
+ * Configuration form for Alert Banner module.
  */
-class ConfigForm extends ConfigFormBase {
+final class ConfigForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
