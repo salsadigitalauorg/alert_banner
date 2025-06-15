@@ -3,17 +3,22 @@ status: true
 dependencies:
   config:
     - field.field.node.alert_banner.field_alert_display_date
+    - field.field.node.alert_banner.field_alert_end_date
     - field.field.node.alert_banner.field_alert_link
     - field.field.node.alert_banner.field_alert_message
     - field.field.node.alert_banner.field_alert_page_visibility
     - field.field.node.alert_banner.field_alert_permanent
+    - field.field.node.alert_banner.field_alert_start_date
     - field.field.node.alert_banner.field_alert_type
     - node.type.alert_banner
   module:
+    - content_moderation
     - datetime
     - link
     - path
     - text
+_core:
+  default_config_hash: uGwwW6ZxLHiHLoSTnF4NwPD9JJystd3a07iVFsVXx3Q
 id: node.alert_banner.default
 targetEntityType: node
 bundle: alert_banner
@@ -26,48 +31,73 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_alert_display_date:
+    type: datetime_default
     weight: 124
+    region: content
     settings: {  }
     third_party_settings: {  }
+  field_alert_end_date:
     type: datetime_default
+    weight: 128
     region: content
+    settings: {  }
+    third_party_settings: {  }
   field_alert_link:
+    type: link_default
     weight: 123
+    region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
-    type: link_default
-    region: content
   field_alert_message:
-    weight: 122
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
     type: text_textarea
+    weight: 122
     region: content
-  field_alert_page_visibility:
-    weight: 126
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
+  field_alert_page_visibility:
     type: string_textarea
+    weight: 126
     region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
   field_alert_permanent:
+    type: boolean_checkbox
     weight: 125
+    region: content
     settings:
       display_label: true
     third_party_settings: {  }
-    type: boolean_checkbox
+  field_alert_start_date:
+    type: datetime_default
+    weight: 127
     region: content
-  field_alert_type:
-    weight: 121
     settings: {  }
     third_party_settings: {  }
+  field_alert_type:
     type: options_select
+    weight: 121
     region: content
+    settings: {  }
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   path:
     type: path
     weight: 30
@@ -76,24 +106,29 @@ content:
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 15
     region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  simple_sitemap:
+    weight: 10
+    region: content
+    settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 120
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 16
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
@@ -106,11 +141,16 @@ content:
   uid:
     type: entity_reference_autocomplete
     weight: 5
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
+    third_party_settings: {  }
+  url_redirects:
+    weight: 50
     region: content
+    settings: {  }
     third_party_settings: {  }
 hidden: {  }
