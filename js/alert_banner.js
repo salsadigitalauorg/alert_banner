@@ -46,6 +46,9 @@
 
   /**
    * Parse date from HTML time element.
+   * Extracts the datetime attribute value from a time element string
+   * and returns a Date object. The Date constructor automatically
+   * handles timezone parsing from ISO 8601 formatted strings.
    *
    * @param {string} dateString - The HTML time element string.
    * @return {Date|null} The parsed date or null if invalid.
@@ -56,6 +59,7 @@
     }
     const match = dateString.match(/datetime="([^"]+)"/);
     if (match && match[1]) {
+      // Date constructor handles timezone offsets in ISO 8601 format
       return new Date(match[1]);
     }
     return null;
@@ -68,6 +72,8 @@
    * @return {boolean} Whether alert is within its date range.
    */
   function checkDateVisibility(alert_item) {
+    // Get current time in the user's timezone
+    // The Date object automatically handles the user's local timezone
     const now = new Date();
 
     // Check start date
@@ -91,26 +97,45 @@
 
   /**
    * Check if alert should be visible on current page.
+   * Supports exact paths and wildcard patterns (* for any characters except spaces).
+   * Special regex characters in paths are automatically escaped to prevent regex errors.
+   * The '<front>' token is replaced with '/' for homepage matching.
    *
-   * @param {string} page_visibility_string - The page visibility string.
+   * @param {string} page_visibility_string - The page visibility string with newline-separated rules.
    * @return {boolean} Whether alert should be visible.
    */
   function checkPageVisibility(page_visibility_string) {
     if ((typeof page_visibility_string !== 'undefined') && page_visibility_string !== false && page_visibility_string !== "") {
-      let page_visibility = page_visibility_string.replace(/\*/g, "[^ ]*");
-      // Replace '<front>' with "/".
-      page_visibility = page_visibility.replace('<front>', '/');
-      // Replace all occurrences of '/' with '\/'.
-      page_visibility = page_visibility.replace('/', '\/');
-      const page_visibility_rules = page_visibility.split(/\r?\n/);
+      // Split rules by newlines first
+      const page_visibility_rules = page_visibility_string.split(/\r?\n/);
       if (page_visibility_rules.length !== 0) {
         const path = window.location.pathname;
         for (let r = 0, rlen = page_visibility_rules.length; r < rlen; r++) {
-          if (path === page_visibility_rules[r]) {
+          let rule = page_visibility_rules[r].trim();
+          
+          // Skip empty rules
+          if (!rule) {
+            continue;
+          }
+          
+          // Replace '<front>' with "/"
+          rule = rule.replace('<front>', '/');
+          
+          // Check for exact match
+          if (path === rule) {
             return true;
           }
-          else if (page_visibility_rules[r].indexOf('*') !== -1 && path.match(new RegExp('^' + page_visibility_rules[r]))) {
-            return true;
+          // Check for wildcard patterns
+          else if (rule.indexOf('*') !== -1) {
+            // Escape special regex characters except for *
+            let pattern = rule.replace(/[.*+?^${}()|[\]\\]/g, function(match) {
+              // Keep * as is for wildcard, escape everything else
+              return match === '*' ? '[^ ]*' : '\\' + match;
+            });
+            
+            if (path.match(new RegExp('^' + pattern))) {
+              return true;
+            }
           }
         }
         return false;
