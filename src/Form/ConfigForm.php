@@ -26,7 +26,7 @@ final class ConfigForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function __construct(
-    protected ConfigFactoryInterface $configFactory,
+     ConfigFactoryInterface $configFactory,
   ) {
     parent::__construct($configFactory);
   }
