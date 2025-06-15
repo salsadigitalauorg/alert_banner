@@ -7,7 +7,14 @@
 
   'use strict';
 
-  // Function taken from https://github.com/onury/invert-color
+  /**
+   * Calculate luminance from RGB values.
+   *
+   * @param {Array} c - RGB color array [r, g, b]
+   * @return {number} Luminance value
+   * 
+   * Function taken from https://github.com/onury/invert-color
+   */
   function getLuminance(c) {
     var i, x;
     var a = []; // So we don't mutate.
@@ -18,6 +25,12 @@
     return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
   }
 
+  /**
+   * Check if alert should be displayed on current page.
+   *
+   * @param {string} page_visibility_string - Newline-separated list of paths/patterns
+   * @return {boolean} Whether alert should be shown on current page
+   */
   function checkPageVisibility(page_visibility_string) {
     if ((typeof page_visibility_string !== 'undefined') && page_visibility_string !== false && page_visibility_string !== "") {
       var page_visibility = page_visibility_string.replace(/\*/g, "[^ ]*");
@@ -42,34 +55,139 @@
     return true;
   }
 
+  /**
+   * Process and render alerts from REST API response.
+   *
+   * @param {jQuery} $placeholder - Container element for alerts
+   * @param {Array} alerts - Array of alert objects from REST API
+   */
+  function processAlerts($placeholder, alerts) {
+    $placeholder.html('').addClass('alerts-processed');
+    
+    alerts.forEach(function(alert_item) {
+      var alert_id = alert_item.alert_id;
+      
+      // Skip if alert is hidden by user
+      if (document.cookie.indexOf('hide_alert_id_' + alert_id) !== -1) {
+        return;
+      }
+      
+      // Check page visibility
+      if (!checkPageVisibility(alert_item.page_visibility)) {
+        return;
+      }
+      
+      // Create alert element
+      var $alert = $('<article>', {
+        'role': 'article',
+        'data-alert-id': alert_id,
+        'class': 'node node--type-alert-banner'
+      });
+      
+      var $content = $('<div>', {
+        'class': 'layout-container container node__content'
+      });
+      
+      // Set alert type and priority
+      if (alert_item.alert_type) {
+        $alert.attr('data-alert-type', alert_item.alert_type);
+      }
+      if (alert_item.priority !== undefined) {
+        $alert.attr('data-alert-priority', alert_item.priority);
+      }
+      
+      // Override background color
+      if (alert_item.priority_colour) {
+        $alert.attr('style', 'background-color:' + alert_item.priority_colour + ' !important');
+      }
+      
+      // Set icon
+      if (alert_item.icon && alert_item.icon !== 'none') {
+        $alert.addClass('alert-icon--' + alert_item.icon);
+      } else {
+        $alert.addClass('alert-icon--none');
+      }
+      
+      // Set message
+      if (alert_item.message) {
+        var alert_message = alert_item.message;
+        if (alert_item.display_date) {
+          alert_message = alert_item.display_date + alert_message;
+        }
+        $('<div>', {
+          'class': 'field clearfix alert-banner-message',
+          'html': alert_message
+        }).appendTo($content);
+      }
+      
+      // Add link
+      if (alert_item.link) {
+        $('<div>', {
+          'class': 'field clearfix alert-banner-link',
+          'html': alert_item.link
+        }).appendTo($content);
+      } else {
+        $alert.addClass('alert-banner-link--none');
+      }
+      
+      // Add close button for non-permanent alerts
+      if (alert_item.permanent !== '1') {
+        var label_dismiss = Drupal.t('Dismiss alert');
+        $('<button>', {
+          'class': 'alert-banner-close',
+          'data-alert-id': alert_id,
+          'aria-label': label_dismiss,
+          'html': '<span>' + label_dismiss + '</span>'
+        }).appendTo($content);
+      } else {
+        $alert.addClass('no-close-button');
+      }
+      
+      $alert.append($content);
+      $placeholder.append($alert);
+      
+      // Add icons class if needed
+      if (alert_item.icon && alert_item.icon !== 'none' && !$placeholder.hasClass('alerts-with-icons')) {
+        $placeholder.addClass('alerts-with-icons');
+      }
+    });
+    
+    // Reattach behaviors for the new elements
+    Drupal.attachBehaviors($placeholder[0]);
+  }
+
   Drupal.behaviors.AlertBannersRestBlock = {
     attach: function (context, settings) {
-      // Replace jQuery.cookie with modern alternative
+      // Set cookie with security attributes
       const setCookie = (name, value) => {
-        document.cookie = `${name}=${value};path=/`;
+        // Add SameSite and Secure attributes for better security
+        // Note: Secure requires HTTPS in production
+        const isSecure = window.location.protocol === 'https:';
+        const cookieString = `${name}=${value};path=/;SameSite=Lax${isSecure ? ';Secure' : ''}`;
+        document.cookie = cookieString;
       };
       
-      // Use once() instead of jQuery.once()
+      // Process alert banners containers
       once('alert-banners', '.alert-banners:not(.alerts-processed)', context)
         .forEach(function (element) {
-          var endpoint = $(element).attr('data-alert-endpoint');
-          if ((typeof endpoint == 'undefined') || !endpoint || endpoint.length === 0) {
+          const $element = $(element);
+          let endpoint = $element.attr('data-alert-endpoint');
+          if (!endpoint || endpoint.length === 0) {
             endpoint = '/alert-banners?_format=json';
           }
-          fetchAlerts(endpoint);
+          
+          // Fetch and process alerts
+          fetch(endpoint)
+            .then(response => response.json())
+            .then(data => {
+              if (data && data.length) {
+                processAlerts($element, data);
+              }
+            })
+            .catch(error => {
+              console.error('Error fetching alerts:', error);
+            });
         });
-        
-      // Use fetch API instead of jQuery.ajax
-      const fetchAlerts = async (endpoint) => {
-        try {
-          const response = await fetch(endpoint);
-          const data = await response.json();
-          return data;
-        } catch (error) {
-          console.error('Error fetching alerts:', error);
-          return [];
-        }
-      };
 
       // Set alert text color.
       $('.alert-banners article.node--type-alert-banner', context).each(function (index, element) {
@@ -88,9 +206,10 @@
       });
 
       // Process the Close button of each alert.
-      $('.alert-banners article.node--type-alert-banner button.alert-banner-close', context).click(function (event) {
-        var alert_id = $(event.target).attr('data-alert-id');
-        setCookie('hide_alert_id_' + alert_id, true);
+      $('.alert-banners article.node--type-alert-banner button.alert-banner-close', context).on('click', function (event) {
+        const $button = $(event.currentTarget);
+        const alert_id = $button.attr('data-alert-id');
+        setCookie('hide_alert_id_' + alert_id, '1');
         $('article.node--type-alert-banner[data-alert-id="' + alert_id + '"]').remove();
       });
     }
