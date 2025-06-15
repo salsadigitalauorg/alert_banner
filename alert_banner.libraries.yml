@@ -1,17 +1,17 @@
 alert_banner:
-  version: 1.x
+  version: '10.x-1.2'
   css:
     theme:
-      css/alert_banner.css: {}
+      css/alert_banner.css: { minified: true }
   js:
-    js/alert_banner.js: {}
+    js/alert_banner.js: { minified: true }
   dependencies:
     - core/drupal
     - core/once
-    - core/js-cookie
+    - core/drupalSettings
 
 alert_banner_au_dta:
-  version: 1.x
+  version: '10.x-1.2'
   css:
     theme:
-      css/alert_banner_au_dta.css: {}
+      css/alert_banner_au_dta.css: { minified: true }

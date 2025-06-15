@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\alert_banner\Form;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Class ConfigForm.
+ * Configuration form for Alert Banner module.
  */
-class ConfigForm extends ConfigFormBase {
+final class ConfigForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
@@ -22,14 +25,23 @@ class ConfigForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function getFormId() {
+  public function __construct(
+     ConfigFactoryInterface $configFactory,
+  ) {
+    parent::__construct($configFactory);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getFormId(): string {
     return 'alert_banner_config_form';
   }
 
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
     $config = $this->config('alert_banner.settings');
 
     $form['enable'] = [
