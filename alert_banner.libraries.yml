@@ -1,5 +1,5 @@
 alert_banner:
-  version: '10.x-1.1'
+  version: '10.x-1.2'
   css:
     theme:
       css/alert_banner.css: { minified: true }
@@ -11,7 +11,7 @@ alert_banner:
     - core/drupalSettings
 
 alert_banner_au_dta:
-  version: '10.x-1.1'
+  version: '10.x-1.2'
   css:
     theme:
       css/alert_banner_au_dta.css: { minified: true }
