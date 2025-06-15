@@ -35,15 +35,25 @@ job-build: &job-build
         when: always
 
 jobs:
-  build-php-8.3:
+  build-php-8.3-d10:
     <<: *container_config
     <<: *job-build
+    environment:
+      DRUPAL_CORE_VERSION: "^10"
+
+  build-php-8.3-d11:
+    <<: *container_config
+    <<: *job-build
+    environment:
+      DRUPAL_CORE_VERSION: "^11"
 
   build-php-8.2:
     <<: *container_config
     docker:
       - image: cimg/php:8.2-browsers
     <<: *job-build
+    environment:
+      DRUPAL_CORE_VERSION: "^10"
 
   deploy:
     <<: *container_config
@@ -60,17 +70,22 @@ workflows:
   version: 2
   main:
     jobs:
-      - build-php-8.3:
+      - build-php-8.3-d10:
+          filters:
+            tags:
+              only: /.*/
+      - build-php-8.3-d11:
           filters:
             tags:
               only: /.*/
       - build-php-8.2:
           filters:
             tags:
-              only: /.*/
+              only: /.*/ 
       # - deploy:
       #     requires:
-      #       - build-php-8.3
+      #       - build-php-8.3-d10
+      #       - build-php-8.3-d11
       #       - build-php-8.2
       #     filters:
       #       tags:
