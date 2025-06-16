@@ -3,7 +3,7 @@ type: module
 description: 'Provides an alert banner block that can be placed anywhere on the site.'
 package: Custom
 version: '10.x-1.2'
-core_version_requirement: ^10
+core_version_requirement: ^10 || ^11
 php: 8.3
 dependencies:
   - drupal:block
